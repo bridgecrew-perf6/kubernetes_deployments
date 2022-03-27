@@ -4,6 +4,7 @@ metadata:                       # for repication controller
   name: pihole-deployment
   labels:
      app: pihole
+namespace: pihole
 spec:                           # for repication controller
   template:
     metadata:                   # for pod
