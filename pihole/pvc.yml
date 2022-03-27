@@ -3,7 +3,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pihole-pvc-etc
+  namespace: pihole
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:
@@ -15,7 +17,9 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: pihole-pvc-dnsmasq
+  namespace: pihole
 spec:
+  storageClassName: manual
   accessModes:
     - ReadWriteMany
   resources:

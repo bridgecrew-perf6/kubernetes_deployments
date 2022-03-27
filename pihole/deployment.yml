@@ -4,7 +4,7 @@ metadata:                       # for repication controller
   name: pihole-deployment
   labels:
      app: pihole
-namespace: pihole
+  namespace: pihole
 spec:                           # for repication controller
   template:
     metadata:                   # for pod
@@ -22,7 +22,6 @@ spec:                           # for repication controller
           envFrom:
           - secretRef:
               name: pihole-secret
-              key: webpass
           volumeMounts:
           - name: pihole-etc
             mountPath: "/etc/pihole"
@@ -30,12 +29,12 @@ spec:                           # for repication controller
             mountPath: "/etc/dnsmasq.d"      
       volumes:
       - name: pihole-etc
-        persistentVolumeClain:
+        persistentVolumeClaim:
           claimName: pihole-pvc-etc
       - name: pihole-dnsmasq
-        persistentVolumeClain:
+        persistentVolumeClaim:
           claimName: pihole-pvc-dnsmasq
   replicas: 2
   selector:                     # DIFFERENT THAN REPICATION CONTROLLER, its mandatory
-    matchlabels:
+    matchLabels:
       app: pihole
