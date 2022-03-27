@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-vol1
+spec:
+  accessModes:
+    - ReadWriteMany              # define how volume should be mounted on host (ReadOnlyMany , readWriteOnce, ReadWriteMany)
+  capacity:
+    storage: 20Gi
+  hostPath:                     # volume path on host ( do not used in prod as it local on node)
+    path: /datadisk/pihole
