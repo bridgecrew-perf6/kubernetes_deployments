@@ -19,9 +19,11 @@ spec:                           # for repication controller
           env:
           - name: TZ
             value: "Europe/Warsaw"
-          envFrom:
-          - secretRef:
-              name: pihole-secret
+          - name: WEBPASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: pihole-secret
+                key: WEBPASSWORD
           volumeMounts:
           - name: pihole-etc
             mountPath: "/etc/pihole"
