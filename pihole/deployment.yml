@@ -1,0 +1,40 @@
+apiVersion: apps/v1             # DIFFERENT THAN REPICATION CONTROLLER
+kind: Deployment                # DIFFERENT THAN REPICATION CONTROLLER
+metadata:                       # for repication controller
+  name: pihole-deployment
+  labels:
+     app: pihole
+spec:                           # for repication controller
+  template:
+    metadata:                   # for pod
+      name: pihole-pod
+      labels:
+        app: pihole
+    spec:                       # for repication controller
+      containers:
+        - name: pihole-container
+          image: pihole/pihole:latest
+          imagePullPolicy: Always
+          env:
+          - name: TZ
+            value: "Europe/Warsaw"
+          envFrom:
+          - secretRef:
+              name: pihole-secret
+              key: webpass
+          volumeMounts:
+          - name: pihole-etc
+            mountPath: "/etc/pihole"
+          - name: pihole-dnsmasq
+            mountPath: "/etc/dnsmasq.d"      
+      volumes:
+      - name: pihole-etc
+        persistentVolumeClain:
+          claimName: pihole-pvc-etc
+      - name: pihole-dnsmasq
+        persistentVolumeClain:
+          claimName: pihole-pvc-dnsmasq
+  replicas: 2
+  selector:                     # DIFFERENT THAN REPICATION CONTROLLER, its mandatory
+    matchlabels:
+      app: pihole
